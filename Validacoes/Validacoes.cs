@@ -8,6 +8,6 @@ namespace Validacoes
         public string Idd { get; set; }
         public string Senha { get; set; }
         public string ConfirmSenha { get; set; }
-
+        public bool BoxTrueFalse { get; set; }
     }
 }

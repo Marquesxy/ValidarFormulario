@@ -17,37 +17,51 @@ public partial class Form1 : Form
             Email = txtEmail.Text,
             Idd = txtIdd.Text,
             Senha = txtSenha.Text,
-            ConfirmSenha = txtConfirmSenha.Text
-            //Box = checkBoxTermo.Checked
+            ConfirmSenha = txtConfirmSenha.Text,
+            BoxTrueFalse = checkBoxTermo.Checked
         };
 
-            ValidaNome(novoUsuario);
-        if (ValidaNome(novoUsuario))
+        if (!ValidaNome(novoUsuario.Nome))
+        {
+            MessageBox.Show("Nome Invalido");
             return;
+        }
 
-            ValidaEmail(novoUsuario);
-        if (ValidaEmail(novoUsuario))
+        if (!ValidaEmail(novoUsuario.Email))
+        {
+            MessageBox.Show("Email Invalido");
             return;
+        }
 
-            ValidaIdd(novoUsuario);
-        if (ValidaIdd(novoUsuario))
+        if (!ValidaIdd(novoUsuario.Idd))
+        {
+            MessageBox.Show("Idade Invalido");
             return;
+        }
 
-            ValidaSenha(novoUsuario);
-        if (ValidaSenha(novoUsuario))
+        if (!ValidaSenha(novoUsuario.Senha))
+        {
+            MessageBox.Show("Senha Invalido");
             return;
+        }
 
-            ValidaConfirmSenha(novoUsuario);
-        if (ValidaConfirmSenha(novoUsuario))
+        if (!ValidaConfirmSenha(novoUsuario.ConfirmSenha))
+        {
+            MessageBox.Show("As senhas não condizem");
             return;
+        }
 
-        MessageBox.Show("sucesso, todos os campos foram preenchidos com exito!");
+        if (!ValidaTermo(novoUsuario))
+        {
+            MessageBox.Show("Impossivel continuar, Termo de Uso não aceito");
+            return;
+        }
 
-
+        MessageBox.Show("Sucesso, todos os campos foram preenchidos com exito!");
     }
-    public bool ValidaNome(Usuario nome)
+    public bool ValidaNome(string nome)
     {
-        if (txtFullName.Text == null || txtFullName.Text.Length < 3 || txtFullName.Text == "")
+        if (nome == null || nome.Length < 3 || nome == "")
 
             return false;
         else
@@ -55,16 +69,16 @@ public partial class Form1 : Form
             return true;
     }
 
-    public bool ValidaEmail(Usuario Email)
+    public bool ValidaEmail(string email)
     {
-        if (!txtEmail.Text.Contains("@"))
+        if (!email.Contains("@"))
             return false;
 
-        int posicaoDoArroba = txtEmail.Text.IndexOf("@");
+        int posicaoDoArroba = email.IndexOf("@");
 
         if (posicaoDoArroba > 0)
         {
-            string restanteDoEmail = txtEmail.Text.Substring(posicaoDoArroba + 1);
+            string restanteDoEmail = email.Substring(posicaoDoArroba + 1);
 
             if (restanteDoEmail.Length > 1 &&
             restanteDoEmail[0] != '.' &&
@@ -83,9 +97,9 @@ public partial class Form1 : Form
 
     }
 
-    public bool ValidaIdd(Usuario Idd)
+    public bool ValidaIdd(string idd)
     {
-        int idade = Convert.ToInt32(txtIdd.Text);
+        int idade = Convert.ToInt32(idd);
 
         if (idade < 18 || idade > 100)
             return false;
@@ -93,19 +107,25 @@ public partial class Form1 : Form
             return true;
     }
 
-    public bool ValidaSenha(Usuario Senha)
+    public bool ValidaSenha(string senha)
     {
-        if (txtSenha.Text.Length < 6)
+        if (senha.Length < 6)
             return false;
         else
             return true;
     }
-    public bool ValidaConfirmSenha(Usuario Senha)
+    public bool ValidaConfirmSenha(string ConfimSenha)
     {
-        if (txtSenha.Text != txtConfirmSenha.Text)
+        if (ConfimSenha != txtSenha.Text)
             return false;
         else
             return true;
+    }
+
+    public bool ValidaTermo(Usuario BoxTrueFalse)
+    {
+        return checkBoxTermo.Checked;
+            
     }
 
     private void btnLimpar_Click(object sender, EventArgs e)
